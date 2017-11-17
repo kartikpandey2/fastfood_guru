@@ -14,9 +14,15 @@ var bcrypt   = require('bcrypt-nodejs');
 var mongoose = require('mongoose');
 var Mongostore = require('connect-mongo')(session);
 var config = require('./auth.js');
+var ejs = require('ejs');
+var request = require('request');
+var zomato = require('zomato');
+
+//ZOMATO 
 
 //middleware
-app.use(express.static(path.join(__dirname,'client')));
+app.set('view engine','ejs');
+app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyParser.json());
 app.use(session(
 {
@@ -102,7 +108,7 @@ app.get('/',function(req,res){
 });
 
 app.get('/profile/:name',isLoggedIn,function(req,res){
-	res.sendFile(__dirname+'/client/profile.html');
+	res.sendFile(__dirname+'/client/home_login.html');
 })
 
 app.get('/register',function(req,res){
@@ -192,7 +198,32 @@ app.get('/logout',function(req,res){
 	res.redirect('/')
 });
 
-
+app.post('/search',function(req,res){
+	var a;
+	city_id = CityId(req.body.location_id)
+	city_id.then(function(city_id){
+	var Entity_id = city_id.location_suggestions[0].entity_id,
+	q = req.body.restaurants,
+	lat = city_id.location_suggestions[0].latitude,
+	lon = city_id.location_suggestions[0].longitude;
+    request({
+	 headers:{
+     'user-key': '657693eec358398b6e7fa690b531f7a7'},
+	uri:'https://developers.zomato.com/api/v2.1/search?entity_id='+Entity_id+'&entity_type=city&q='+q+'&lat='+lat+'&lon='+lon,
+	method: 'GET'},
+	function(error,response,body){
+		if(!error && res.statusCode ==200){
+			a = JSON.parse(body);
+			console.log(a.restaurants[0].restaurant.featured_image);
+			res.render('search_result.ejs',{result:a.restaurants});
+		}
+	})
+	})
+	.catch((err) => {
+		console.log(err)
+	})
+	
+});
 
 //server listening
 app.listen(3000,function(){
@@ -208,7 +239,28 @@ function isLoggedIn(req, res, next) {
 		return next();
 	}
         
-else{ res.send('please login');}
+else{ 
+res.send('please login');}
    
 }
 
+
+function CityId(state){
+	return new Promise((resolve, reject) => {
+		var a;
+	request({
+	 headers:{
+     'user-key': '657693eec358398b6e7fa690b531f7a7'},
+	uri:'https://developers.zomato.com/api/v2.1/locations?query='+state,
+	method: 'GET'},
+	function(error,res,body){
+		if(!error && res.statusCode ==200){
+			 a = JSON.parse(body);
+			 resolve(a);
+		}
+		else{
+			reject(a);
+		}
+	});
+	})
+}

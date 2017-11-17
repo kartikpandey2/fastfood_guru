@@ -7,6 +7,7 @@
     "connect-flash": "^0.1.1",
     "connect-mongo": "^2.0.0",
     "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "express-sessions": "^1.0.6",
@@ -18,6 +19,7 @@
     "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "zomato": "^1.1.0"
   }
 }

@@ -1,0 +1,65 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="search_result.css">
+<head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">FastFood Guru</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home<span class="sr-only">(current)</span></a></li>
+		<li><a href = "#">About </a></li>
+		<li><a href = "#">Contact </a></li>
+      </ul>
+      <form class="navbar-form navbar-left" action="/search" method="POST">
+	    <div class="form-group">
+		  <i class="fa fa-location-arrow" aria-hidden="true" style="color:white"></i>
+          <input type="text" name ="location_id" class="form-control" placeholder="Location..." style="width:100px"></input>
+        </div>
+        <div class="form-group">
+          <input type="text" name ="restaurants" class="form-control" placeholder="Search for restaurants or cuisines..." style="width:300px">
+        </div>
+        <button type="submit" class="btn btn-default" >Search</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/logout">Log Out</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div id="movedown">
+<% for(var i=0; i< result.length;++i){ %>
+<div class = "container" id="container1">
+	<div class="row">
+		<div class="col-md-4">
+			<img class="img-thumbnail" src = "<%=result[i].restaurant.featured_image%>" style="height:150px">
+		</div>
+		<div class="col-md-6">
+		<span class ="restaurant_name"><%=result[i].restaurant.name%></span><br><br>
+		<strong><%=result[i].restaurant.location.address%></strong><br>
+		<strong>CUISINES&nbsp:&nbsp</strong><%=result[i].restaurant.cuisines%><br>
+		<strong>COST FOR TWO&nbsp:&nbsp</strong>₹<%=result[i].restaurant.average_cost_for_two%><br>
+		<a class="btn btn-default" href=""><i class="fa fa-phone" aria-hidden="true"></i> Call</a>
+		<a class="btn btn-default" href="<%=result[i].restaurant.menu_url%>"><i class="fa fa-cutlery" aria-hidden="true"></i> View Menu</a>
+		</div>
+	</div>
+</div>
+<% } %>
+</div>
+</body>
+</html>

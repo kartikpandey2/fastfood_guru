@@ -1,0 +1,23 @@
+#container{
+	position :relative;
+	top:30%;
+	color:white;
+	width:60%;
+	left:15%;
+}
+
+#exampleInputEmail1{
+	width:30%;
+}
+
+#exampleInputPassword1{
+	width:30%;
+}
+
+body{
+	background-image:url("images/loginimage.jpg");
+	    background-size: 100% 100%;
+		    background-repeat: no-repeat;
+    opacity:0.8;
+
+}

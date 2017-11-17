@@ -1,0 +1,33 @@
+#container1{
+	margin-top: 20px;
+    margin-bottom: 50px;
+	position:relative;
+	left:5%;
+	width:900px;
+	border-radius: 25px;
+    background: #f1f3f6;
+    padding: 20px;  
+}
+
+
+.restaurant_name{
+	color :blue;
+	font-weight: bold;
+	font-size: 150%;
+}
+
+.form-control{
+  width:100px;
+  }
+
+#movedown{
+    margin-top :80px;
+  }
+  
+.thimg-thumbnail{
+	height:200px;
+}
+
+body{
+	background: #C0C0C0;
+}
